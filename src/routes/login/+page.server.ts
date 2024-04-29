@@ -1,4 +1,4 @@
-import { login } from "$lib/helpers/login";
+import { login } from "$lib/server/login";
 import type { LoginRequestForm } from "$lib/types/serverside_types";
 import type { Actions } from "./$types";
 

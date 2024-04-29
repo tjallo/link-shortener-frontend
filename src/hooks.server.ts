@@ -1,3 +1,3 @@
-import { init } from "$lib/helpers/init";
+import { init } from "$lib/server/init";
 
 init();
