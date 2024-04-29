@@ -1,8 +1,8 @@
+import { BACKEND_ENDPOINT } from "$env/static/private";
 import type { JwtToken, LoginRequestForm, UserInfo } from "$lib/types/serverside_types";
 import axios from "axios";
 
 export async function login(loginRequestForm: LoginRequestForm): Promise<UserInfo | null> {
-	const BACKEND_ENDPOINT = process.env.BACKEND_ENDPOINT;
 	if (BACKEND_ENDPOINT === undefined || !BACKEND_ENDPOINT) {
 		console.debug("Backend endpoint .env var is not set");
 		return null;

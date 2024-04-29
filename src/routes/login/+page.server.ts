@@ -1,5 +1,6 @@
 import { login } from "$lib/server/login";
 import type { LoginRequestForm } from "$lib/types/serverside_types";
+import { redirect } from "@sveltejs/kit";
 import type { Actions } from "./$types";
 
 export const actions = {
