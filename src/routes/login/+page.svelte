@@ -1,4 +1,4 @@
-<form action="login" method="POST" class="max-w-md mx-auto">
+<form method="POST" class="max-w-md mx-auto">
 	<div class="mb-4">
 		<label for="username" class="block text-gray-700">Username</label>
 		<input
