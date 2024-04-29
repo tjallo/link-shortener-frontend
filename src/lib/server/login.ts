@@ -33,7 +33,7 @@ export async function login(loginRequestForm: LoginRequestForm): Promise<boolean
 	let expiryTime = process.env.JWT_EXPIRY_TIME ?? 24 * 60 * 60;
 	if (typeof expiryTime === "string") expiryTime = Number.parseInt(expiryTime);
 
-	const expiryOffset = expiryTime * 1000;
+	const expiryOffset = expiryTime * 1000 - 10 * 60 * 1000;
 
 	userInfoStore.set({
 		loggedIn: true,
