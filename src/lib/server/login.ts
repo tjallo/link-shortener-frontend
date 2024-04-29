@@ -1,12 +1,11 @@
-import type { JwtToken, LoginRequestForm } from "$lib/types/serverside_types";
+import type { JwtToken, LoginRequestForm, UserInfo } from "$lib/types/serverside_types";
 import axios from "axios";
-import { userInfoStore } from "./stores";
 
-export async function login(loginRequestForm: LoginRequestForm): Promise<boolean> {
+export async function login(loginRequestForm: LoginRequestForm): Promise<UserInfo | null> {
 	const BACKEND_ENDPOINT = process.env.BACKEND_ENDPOINT;
 	if (BACKEND_ENDPOINT === undefined || !BACKEND_ENDPOINT) {
 		console.debug("Backend endpoint .env var is not set");
-		return false;
+		return null;
 	}
 
 	const url = BACKEND_ENDPOINT + "/login";
@@ -20,14 +19,14 @@ export async function login(loginRequestForm: LoginRequestForm): Promise<boolean
 			data: loginRequestForm
 		});
 	} catch (error) {
-		return false;
+		return null;
 	}
 
 	const token = res.data.token;
 	const isValidToken = typeof token === "string";
 
 	if (!isValidToken) {
-		return false;
+		return null;
 	}
 
 	let expiryTime = process.env.JWT_EXPIRY_TIME ?? 24 * 60 * 60;
@@ -35,11 +34,11 @@ export async function login(loginRequestForm: LoginRequestForm): Promise<boolean
 
 	const expiryOffset = expiryTime * 1000 - 10 * 60 * 1000;
 
-	userInfoStore.set({
+	const userInfo: UserInfo = {
 		loggedIn: true,
 		jwtToken: token,
 		expiry: Date.now() + expiryOffset
-	});
+	};
 
-	return true;
+	return userInfo;
 }

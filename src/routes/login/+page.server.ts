@@ -20,6 +20,13 @@ export const actions = {
 
 		const loginRequestForm: LoginRequestForm = { username, password };
 
-		login(loginRequestForm);
+		const result = await login(loginRequestForm);
+
+		if (result === null) {
+			// TODO: error handling
+			return;
+		}
+
+		cookies.set("jwt_token", result.jwtToken, { path: "/", expires: new Date(result.expiry) });
 	}
 } satisfies Actions;
